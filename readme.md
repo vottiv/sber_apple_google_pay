@@ -6,7 +6,6 @@
 >
 >Документация от Сбера по [Apple Pay](https://securepayments.sberbank.ru/wiki/doku.php/integration:api:schemes:applepay_app_rest) и по [Google Pay](https://securepayments.sberbank.ru/wiki/doku.php/integration:api:schemes:googlepay_app_rest)
 
-___
 ## Описание используемых методов
 1) google_pay - метод для оплаты заказа в платежной системе Google Pay
 2) apple_pay - метод для оплаты заказа в платежной системе Apple Pay
@@ -32,7 +31,7 @@ ___
 3) После регистрации заказа с приложения передаем полученный ответ в методы оплаты google_pay или apple_pay.
 На стороне сайта идёт обработка полученного paymentToken с запросом на оплату и изменение заказа по orderNumber, в случае успешно проведенной транзакции.
 Ответом будет либо статус success или расшифровка полученной ошибки.
-___
+
 ## Наиболее частые вопросы
 1) Для работы Google Pay не нужен сертификат. Для Apple Pay обязателен.
 2) Версия ЛК Сбербанка по словам специалиста ТП никак не влияет на генерацию подписей и сертификатов.
