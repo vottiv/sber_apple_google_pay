@@ -1,9 +1,11 @@
 <?php
 
+namespace PaySystem;
+
 use Bitrix\Main\SystemException;
 use Bitrix\Sale\Order;
 
-class Pay
+class Mobile
 {
     private const LOGIN_MERCHANT = '*****';
 
@@ -27,6 +29,7 @@ class Pay
     public function __construct()
     {
         $this->Authorization = new Authorization();
+        // Здесь напишите свою проверку для текущей площадки
         $isDev = true;
         $this->login = $isDev ? self::TEST_LOGIN : self::PROD_LOGIN;
         $this->password = $isDev ? self::TEST_PASSWORD : self::PROD_PASSWORD;
@@ -38,7 +41,8 @@ class Pay
     {
 
         if (!empty($params['token'])) {
-            $userId = $this->Authorization->getUserId($params['token']);
+            // Метод, который возвращает идентификатор пользователя по его token
+            // и сохраняет в переменную $userId 
         } else {
             throw new SystemException('Не введен токен пользователя.');
         }
@@ -100,7 +104,7 @@ class Pay
         $response = json_decode($response);
 
         if ($response->success == 'true') {
-            $status = $this->getOrderStatus($orderNumber, $response->data->orderId);
+            $status = $this->get_order_status($orderNumber, $response->data->orderId);
             if ($status['actionCode'] == 0) {
                 $paymentCollection = $order->getPaymentCollection();
                 $payment = $paymentCollection[0];
@@ -124,13 +128,14 @@ class Pay
     {
 
         if (!empty($params['token'])) {
-            $userId = $this->Authorization->getUserId($params['token']);
+            // Метод, который возвращает идентификатор пользователя по его token
+            // и сохраняет в переменную $userId 
         } else {
             throw new SystemException('Не введен токен пользователя.');
         }
 
         if (!empty($params['paymentToken'])) {
-            //TODO тут принемаем paymentData
+            // Принимаем paymentData
             $paymentToken = $params['paymentToken'];
         } else {
             throw new SystemException('Не введен токен платежного сервиса.');
@@ -187,7 +192,7 @@ class Pay
         $response = json_decode($response);
 
         if ($response->success == 'true') {
-            $status = $this->getOrderStatus($orderNumber, $response->data->orderId);
+            $status = $this->get_order_status($orderNumber, $response->data->orderId);
             if ($status['actionCode'] == 0) {
                 $paymentCollection = $order->getPaymentCollection();
                 $payment = $paymentCollection[0];
